@@ -1,32 +1,49 @@
 import React, { useState, useEffect } from 'react';
-import { Text, Button, StyleSheet, View, TextInput } from "react-native";
+import { Text, Button, TouchableOpacity, StyleSheet, View, TextInput } from "react-native";
 import styles from "../styles"
 
 const HomeScreen = ({ navigation }) => {
     const [text, setText] = useState('')
 
     return (
-        <View>
-            <Text style={styles.text}> React Native App!!!!!</Text>
+        <View style={styles.content}>
+            <Text style={styles.title}> Welcome!</Text>
+            <Text style={styles.text}> React Native App</Text>
+            <Text style={styles.text}> Enter which subreddit you would like to see:</Text>
+            <TextInput 
+            style={styles.text}
+            placeholder = "Enter Value Here"
+            placeholderTextColor = "#9a73ef"
+            value={text}
+            onChangeText={(newValue)=> setText(newValue)}
+            />
             <Text> {text} </Text>
-            <Button 
-            title ="View some cute animals"
+            <TouchableOpacity 
+            style={styles.screenButton}
             onPress={() => {
-                /* 1. Navigate to the Details route with params */
                 navigation.navigate('Cute', {
-                  text: text
+                  text: 'r/aww'
                 });
-            }}
-            />
-            <Button
-            title ="View some football"
+            }}>
+            <Text style={styles.buttonText}>View some cute animals</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+            style={styles.screenButton}
+            onPress={() => {
+                navigation.navigate('Football');
+            }}>
+            <Text style={styles.buttonText}>View some football</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+            style={styles.screenButton}
             onPress={() => {
                 /* 1. Navigate to the Details route with params */
-                navigation.navigate('Football', {
+                navigation.navigate('Pokemon', {
                   text: text
                 });
-            }}
-            />
+            }}>
+            <Text style={styles.buttonText}>View some pokemon</Text>
+            </TouchableOpacity>
         </View>
     );
 };

@@ -1,16 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { View, Text, Image, StyleSheet, FlatList, Linking } from 'react-native';
 import APIClient from '../APIClient';
+import styles from "../styles"
 
 const FootballScreen = ({ route, navigation }) => {
-    const text = navigation.getParam('text');
     const [loadedPost, setLoadedPost] = useState([]);
-    const redditText = JSON.stringify(text);
 
     useEffect(() => {
         apiClient = new APIClient();
         apiClient.load("r/football").then(setLoadedPost);
-
         return () => {
             console.log("This will be logged on unmount");
         }
@@ -18,35 +16,19 @@ const FootballScreen = ({ route, navigation }) => {
 
     return (
         <FlatList 
-        keyExtractor={(post, index) => index}
-         data={loadedPost} 
+         keyExtractor={(post, index) => index.toString()}
+         data={loadedPost}
          renderItem={({item}) => {
-         return    <View>
+         return <View>
              <Text style={styles.textStyle}
              onPress={() => Linking.openURL(item.url)}
              >{item.title}</Text>
-             {/* <Image source={{uri: item.thumbnail}} style={styles.imageView}/> */}
-             </View>
+             <Image source={ item.thumbnail != "self" ? {uri: item.thumbnail} : require('../assets/footballPlaceHolder.png')} style={styles.imageView}/>
+         </View>
          }}
         />
     );
 };
-
-const styles = StyleSheet.create({
-    textStyle: {
-        marginVertical: 50,
-        color: 'blue',
-        fontWeight: 'bold',
-        fontSize: 30
-    }, 
-    imageView: {
-        width: '75%',
-        height: 200 ,
-        margin: 0,
-        borderRadius : 7
-     
-    }
-})
 
 export default FootballScreen;
 
