@@ -2,15 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, Image, StyleSheet, FlatList, Linking } from 'react-native';
 import APIClient from '../APIClient';
 
-const ListScreen = ({ route, navigation }) => {
-    console.debug("route" + route);
-    const { text } = route.params;
+const FootballScreen = ({ route, navigation }) => {
+    const text = navigation.getParam('text');
     const [loadedPost, setLoadedPost] = useState([]);
     const redditText = JSON.stringify(text);
 
     useEffect(() => {
         apiClient = new APIClient();
-        apiClient.load("r/" + {redditText}).then(setLoadedPost);
+        apiClient.load("r/football").then(setLoadedPost);
 
         return () => {
             console.log("This will be logged on unmount");
@@ -26,7 +25,7 @@ const ListScreen = ({ route, navigation }) => {
              <Text style={styles.textStyle}
              onPress={() => Linking.openURL(item.url)}
              >{item.title}</Text>
-             <Image source={{uri: item.thumbnail}} style={styles.imageView}/>
+             {/* <Image source={{uri: item.thumbnail}} style={styles.imageView}/> */}
              </View>
          }}
         />
@@ -49,7 +48,7 @@ const styles = StyleSheet.create({
     }
 })
 
-export default ListScreen;
+export default FootballScreen;
 
 
 //Flatlist - takes an array into a list of elements - have to pass in data

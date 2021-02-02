@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Text, Button, StyleSheet, View, TextInput } from "react-native";
-import APIClient from "../APIClient"
-import { CommonActions } from '@react-navigation/native';
+import styles from "../styles"
 
 const HomeScreen = ({ navigation }) => {
     const [text, setText] = useState('')
@@ -9,29 +8,28 @@ const HomeScreen = ({ navigation }) => {
     return (
         <View>
             <Text style={styles.text}> React Native App!!!!!</Text>
-            <Text> Enter subreddit you would like to see:</Text>
-            <TextInput 
-                value={text}
-                onChangeText={(newValue)=> setText(newValue)}/>
             <Text> {text} </Text>
             <Button 
-            title ="Go to list demo"
+            title ="View some cute animals"
             onPress={() => {
                 /* 1. Navigate to the Details route with params */
-                navigation.navigate('List', {
-                  text: 'anything you want here'
+                navigation.navigate('Cute', {
+                  text: text
+                });
+            }}
+            />
+            <Button
+            title ="View some football"
+            onPress={() => {
+                /* 1. Navigate to the Details route with params */
+                navigation.navigate('Football', {
+                  text: text
                 });
             }}
             />
         </View>
     );
 };
-
-const styles = StyleSheet.create({
-    text: {
-      fontSize: 30
-    }
-});
 
 export default HomeScreen;
 
