@@ -36,16 +36,6 @@ const HomeScreen = ({ navigation }) => {
             }}>
             <Text style={styles.buttonText}>View some football</Text>
             </TouchableOpacity>
-            <TouchableOpacity
-            style={styles.screenButton}
-            onPress={() => {
-                /* 1. Navigate to the Details route with params */
-                navigation.navigate('Pokemon', {
-                  text: text
-                });
-            }}>
-            <Text style={styles.buttonText}>View some pokemon</Text>
-            </TouchableOpacity>
         </View>
     );
 };
