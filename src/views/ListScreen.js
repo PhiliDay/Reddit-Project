@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Image, StyleSheet, FlatList, Linking } from 'react-native';
+import { View, Text, Image, FlatList, Linking } from 'react-native';
 import APIClient from '../APIClient';
 import styles from "../styles"
 
-const CuteScreen = ({ route, navigation }) => {
+const ListScreen = ({ navigation }) => {
 
     const [loadedPost, setLoadedPost] = useState([]);
     const text = navigation.getParam('text');
@@ -22,21 +22,20 @@ const CuteScreen = ({ route, navigation }) => {
 
     return (
         <FlatList 
-         keyExtractor={(post, index) => index}
+         keyExtractor={(post, index) => index.toString()}
          data={loadedPost} 
          renderItem={({item}) => {
          return <View>
              <Text style={styles.textStyle}
              onPress={() => Linking.openURL(item.url)}
              >{item.title}</Text>
-             <Image source={{uri: item.thumbnail}} style={styles.imageView}/>
+             <Image source={ item.thumbnail != "self" ? {uri: item.thumbnail} : require('../assets/placeholder.png')} style={styles.imageView}/>
              </View>
          }}
         />
     );
 };
 
-export default CuteScreen;
+export default ListScreen;
 
 
-//Flatlist - takes an array into a list of elements - have to pass in data
