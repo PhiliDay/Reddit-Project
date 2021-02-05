@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, Image, StyleSheet, FlatList, Linking } from 'react-native';
 import APIClient from '../APIClient';
 import styles from "../styles"
@@ -7,12 +7,14 @@ const CuteScreen = ({ route, navigation }) => {
 
     const [loadedPost, setLoadedPost] = useState([]);
     const text = navigation.getParam('text');
-    const redditText = JSON.stringify(text);
 
     useEffect(() => {
         apiClient = new APIClient();
-        console.log(redditText);
-        apiClient.load(redditText).then(setLoadedPost);
+        const promise = apiClient.load("r/" + text)
+            .then(setLoadedPost)
+            .catch(console.error)
+            .finally(() => console.log("Completed Loading"));
+
         return () => {
             console.log("This will be logged on unmount");
         }
@@ -20,10 +22,10 @@ const CuteScreen = ({ route, navigation }) => {
 
     return (
         <FlatList 
-        keyExtractor={(post, index) => index}
+         keyExtractor={(post, index) => index}
          data={loadedPost} 
          renderItem={({item}) => {
-         return    <View>
+         return <View>
              <Text style={styles.textStyle}
              onPress={() => Linking.openURL(item.url)}
              >{item.title}</Text>

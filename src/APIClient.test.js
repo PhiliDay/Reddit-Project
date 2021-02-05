@@ -2,5 +2,5 @@ import APIClient from "./APIClient"
 
 test('testRecieveAnObject', async() => {
   apiClient = new APIClient();
-  expect((await apiClient.load('r/aww')).length).toBe(25);
+  expect((await apiClient.load('r/aww')).length).toBeGreaterThan(0);
 });

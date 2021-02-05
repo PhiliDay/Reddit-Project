@@ -15,14 +15,16 @@ const HomeScreen = ({ navigation }) => {
             placeholder = "Enter Value Here"
             placeholderTextColor = "#9a73ef"
             value={text}
-            onChangeText={(newValue)=> setText(newValue)}
+            onChangeText={(newValue)=> {
+                setText(newValue);
+            }}
             />
             <Text> {text} </Text>
             <TouchableOpacity 
             style={styles.screenButton}
             onPress={() => {
                 navigation.navigate('Cute', {
-                  text: 'r/aww'
+                  text: text
                 });
             }}>
             <Text style={styles.buttonText}>View some cute animals</Text>
